@@ -7,15 +7,15 @@ module Bsky
       @facets = [] of Facet
     end
 
-    def set_mention(mention_text : String, did : String)
-      /#{mention_text}/.match(@text).try do |m|
-        @facets << FacetMention.new(m.byte_begin, m.byte_end, did)
+    def add_mention(mention_text : String, did : String)
+      /#{mention_text}/.match(@text).try do |match|
+        @facets << FacetMention.new(match.byte_begin, match.byte_end, did)
       end
     end
 
-    def set_link(url : String)
-      /#{url}/.match(@text).try do |m|
-        @facets << FacetLink.new(m.byte_begin, m.byte_end, url)
+    def add_link(url : String)
+      /#{url}/.match(@text).try do |match|
+        @facets << FacetLink.new(match.byte_begin, match.byte_end, url)
       end
     end
 

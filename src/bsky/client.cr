@@ -12,7 +12,7 @@ module Bsky
     def login(@identifier : String, password : String) : JSON::Any
       headers = HTTP::Headers{"Content-Type" => "application/json", "Accept" => "application/json"}
       credentials = {"identifier" => @identifier, "password" => password}
-      response = exec_post("/com.atproto.server.createSession", headers, login.to_json)
+      response = exec_post("/com.atproto.server.createSession", headers, credentials.to_json)
       data = JSON.parse(response.body.to_s)
 
       if response.status_code == 200
