@@ -57,7 +57,7 @@ module Bsky
       JSON.parse(response.body.to_s)
     end
 
-    private def exec_post(path : String, headers : HTTP::Headers, body : String? = nil) : HTTP::Response
+    private def exec_post(path : String, headers : HTTP::Headers, body : String? = nil) : HTTP::Client::Response
       HTTP::Client.post("#{BASE_URL}#{path}", headers, body: body)
     end
   end
