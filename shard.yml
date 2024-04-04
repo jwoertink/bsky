@@ -1,0 +1,9 @@
+name: bsky
+version: 0.0.1
+
+authors:
+  - Jeremy Woertink <jeremywoertink@gmail.com>
+
+crystal: '>= 1.10.1'
+
+license: MIT
