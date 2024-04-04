@@ -7,14 +7,14 @@ module Bsky
       {
         "index" => {
           "byteStart" => @byte_start,
-          "byteEnd" => @byte_end
+          "byteEnd"   => @byte_end,
         },
         "features" => [
           {
             "$type": "app.bsky.richtext.facet#mention",
-            "did": @did
-          }
-        ]
+            "did":   @did,
+          },
+        ],
       }
     end
   end

@@ -32,12 +32,12 @@ module Bsky
       @did = nil
     end
 
-    def upload_image(image_data : String, mime_type : String, alt : String? = nil)
+    def upload_image(image_data : String, mime_type : String, alt : String? = nil) : Image?
       headers = HTTP::Headers{"Content-Type" => mime_type, "Accept" => "application/json", "Authorization" => "Bearer #{access_token}"}
       response = exec_post("/com.atproto.repo.uploadBlob", headers, image_data)
       if response.status_code == 200
         data = JSON.parse(response.body.to_s)["blob"]
-        Image.new(data)
+        Image.new(ref: data.dig("ref", "$link").as_s, mime_type: mime_type, size: data["size"].as_i, alt: alt)
       end
     end
 
@@ -48,9 +48,9 @@ module Bsky
 
     def send_post(text : RichText)
       post = {
-        "repo" => @identifier,
+        "repo"       => @identifier,
         "collection" => "app.bsky.feed.post",
-        "record" => text.to_h
+        "record"     => text.to_h,
       }
       headers = HTTP::Headers{"Content-Type" => "application/json", "Accept" => "application/json", "Authorization" => "Bearer #{access_token}"}
       response = exec_post("/com.atproto.repo.createRecord", headers, post.to_json)

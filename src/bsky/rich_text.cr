@@ -9,7 +9,7 @@ module Bsky
 
     def set_mention(mention_text : String, did : String)
       /#{mention_text}/.match(@text).try do |m|
-      @facets << FacetMention.new(m.byte_begin, m.byte_end, did)
+        @facets << FacetMention.new(m.byte_begin, m.byte_end, did)
       end
     end
 
@@ -25,20 +25,20 @@ module Bsky
 
     def to_h
       base = {
-        "$type" => "app.bsky.feed.post",
-        "text" => @text,
-        "createdAt" => Time.utc.to_rfc3339
+        "$type"     => "app.bsky.feed.post",
+        "text"      => @text,
+        "createdAt" => Time.utc.to_rfc3339,
       }
 
       if em = @embed
         base.as(Hash).merge({
-          "embed" => em.to_h
+          "embed" => em.to_h,
         })
       end
 
       if !@facets.empty?
         base.as(Hash).merge({
-          "facets" => @facets.map(&.to_h)
+          "facets" => @facets.map(&.to_h),
         })
       end
 
