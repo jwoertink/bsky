@@ -17,7 +17,7 @@ module Bsky
 
       if response.status_code == 200
         @access_token = data["accessJwt"].as_s
-        @refresh_token = data["refreshJwtn"].as_s
+        @refresh_token = data["refreshJwt"].as_s
         @did = data["did"].as_s
       end
 
