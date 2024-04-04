@@ -31,13 +31,13 @@ module Bsky
       }
 
       if em = @embed
-        base.as(Hash).merge({
+        base = base.as(Hash).merge({
           "embed" => em.to_h,
         })
       end
 
       if !@facets.empty?
-        base.as(Hash).merge({
+        base = base.as(Hash).merge({
           "facets" => @facets.map(&.to_h),
         })
       end
