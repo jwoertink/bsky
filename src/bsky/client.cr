@@ -37,7 +37,7 @@ module Bsky
       response = exec_post("/com.atproto.repo.uploadBlob", headers, image_data)
       if response.status_code == 200
         data = JSON.parse(response.body.to_s)["blob"]
-        Image.new(ref: data.dig("ref", "$link").as_s, mime_type: mime_type, size: data["size"].as_i, alt: alt)
+        Image.new(ref: data.dig("ref", "$link").as_s, mime_type: mime_type, size: data["size"].as_i64, alt: alt)
       end
     end
 
