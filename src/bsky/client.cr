@@ -5,13 +5,12 @@ module Bsky
     getter access_token : String? = nil
     getter refresh_token : String? = nil
     getter did : String? = nil
-    getter identifier : String? = nil
 
     # Create an "App Password" https://bsky.app/settings/app-passwords
     # `identifier` should be your login (e.g. myname.bsky.social)
-    def login(@identifier : String, password : String) : JSON::Any
+    def login(identifier : String, password : String) : JSON::Any
       headers = HTTP::Headers{"Content-Type" => "application/json", "Accept" => "application/json"}
-      credentials = {"identifier" => @identifier, "password" => password}
+      credentials = {"identifier" => identifier, "password" => password}
       response = exec_post("/com.atproto.server.createSession", headers, credentials.to_json)
       data = JSON.parse(response.body.to_s)
 
@@ -48,7 +47,7 @@ module Bsky
 
     def send_post(text : RichText)
       post = {
-        "repo"       => @identifier,
+        "repo"       => did,
         "collection" => "app.bsky.feed.post",
         "record"     => text.to_h,
       }
