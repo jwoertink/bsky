@@ -9,15 +9,26 @@ module Bsky
     end
 
     def to_h
-      {
+      base = {
         "$type"    => "app.bsky.embed.external",
         "external" => {
           "uri"         => @uri,
           "title"       => @title,
           "description" => @description,
-          "thumb"       => @thumb.try(&.to_h["image"]?),
         },
       }
+
+      @thumb.try do |thumb|
+        if image = thumb.to_h["image"]?
+          base = base.as(Hash).merge({
+            "external" => {
+              "thumb" => image,
+            },
+          })
+        end
+      end
+
+      base
     end
   end
 end
