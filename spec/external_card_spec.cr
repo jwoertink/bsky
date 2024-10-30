@@ -7,6 +7,9 @@ describe Bsky::ExternalCard do
       card = Bsky::ExternalCard.new("www.site.com", "My Site", "Welcome to my site", img)
 
       card.to_h["$type"].should eq("app.bsky.embed.external")
+      card.to_h.dig("external", "uri").should eq("www.site.com")
+      card.to_h.dig("external", "title").should eq("My Site")
+      card.to_h.dig("external", "description").should eq("Welcome to my site")
       card.to_h.dig("external", "thumb", "ref", "$link").should eq("ref:123")
     end
   end
@@ -16,6 +19,9 @@ describe Bsky::ExternalCard do
       card = Bsky::ExternalCard.new("www.site.com", "My Site", "Welcome to my site")
 
       card.to_h["$type"].should eq("app.bsky.embed.external")
+      card.to_h.dig("external", "uri").should eq("www.site.com")
+      card.to_h.dig("external", "title").should eq("My Site")
+      card.to_h.dig("external", "description").should eq("Welcome to my site")
       card.to_h["external"].as(Hash).has_key?("thumb").should eq(false)
     end
   end
