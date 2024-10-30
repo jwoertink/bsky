@@ -49,6 +49,12 @@ client.logout
 
 ## Development
 
+* write code
+* write spec
+* crystal tool format spec/ src/
+* ./bin/ameba
+* crystal spec
+* repeat
 
 ## Contributing
 
