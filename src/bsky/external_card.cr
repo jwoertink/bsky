@@ -20,11 +20,10 @@ module Bsky
 
       @thumb.try do |thumb|
         if image = thumb.to_h["image"]?
-          base = base.as(Hash).merge({
-            "external" => {
-              "thumb" => image,
-            },
+          external = base.as(Hash)["external"].as(Hash).merge({
+            "thumb" => image,
           })
+          base = base.as(Hash).merge({"external" => external})
         end
       end
 
