@@ -23,11 +23,16 @@ require "bsky"
 client = Bsky::Client.new
 client.login("my.handle.social", "my-app-pass-word")
 
+# send a simple post
 client.send_post("Posting from the API")
 
-complex_post = Bsky::RichText.new("A complex post for @crystal.bsky.social https://crystal-lang.org")
+complex_post = Bsky::RichText.new("A complex post for @crystal.bsky.social https://crystal-lang.org #programming")
+
 complex_post.add_mention("@crystal.bsky.social", did: "did:plc:abc123")
 complex_post.add_link("https://crystal-lang.org")
+
+# connect the hashtags
+complex_post.extract_tags
 
 image_data = File.read("./images/crystal.png")
 image = client.upload_image(image_data, mime_type: "image/png", alt: "A nice Crystal")
