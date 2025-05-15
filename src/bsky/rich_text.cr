@@ -23,6 +23,27 @@ module Bsky
       @embed = card
     end
 
+    def extract_tags
+      regex = /
+        \#(
+          (?:\#{1,2}(?!\d+$)[a-zA-Z0-9_]{1,64}) |                     # Double # and non-numeric
+          (?:
+            (?:[\x{1F3FB}-\x{1F3FF}])?                                # optional skin tone
+              (?:[\x{1F1E6}-\x{1F1FF}]{2} |                           # flags
+                [\x{1F300}-\x{1FAFF}\x{2600}-\x{26FF}\x{2700}-\x{27BF}]
+                (?:\x{200D}[\x{1F300}-\x{1FAFF}\x{2600}-\x{26FF}\x{2700}-\x{27BF}])*
+                [\x{FE0F}]?                                            # emoji presentation
+              )+
+          ) |
+          (?!\d+$)[\p{L}\p{M}\p{N}+\=\|\>\<]{2,64}                    # mixed unicode (not only digits)
+        )
+      /x
+
+      @text.scan(regex) do |match|
+        @facets << FacetTag.new(match.byte_begin, match.byte_end, match[1])
+      end
+    end
+
     def to_h
       base = {
         "$type"     => "app.bsky.feed.post",
