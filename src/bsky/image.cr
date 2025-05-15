@@ -4,7 +4,7 @@ module Bsky
       @ref : String,
       @mime_type : String,
       @size : Int64,
-      @alt : String? = nil
+      @alt : String? = nil,
     )
     end
 

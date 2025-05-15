@@ -4,7 +4,7 @@ module Bsky
       @uri : String,
       @title : String,
       @description : String,
-      @thumb : Image? = nil
+      @thumb : Image? = nil,
     )
     end
 

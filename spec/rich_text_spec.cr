@@ -26,7 +26,7 @@ describe Bsky::RichText do
     it "builds" do
       text = Bsky::RichText.new("Hello #World. Grumbles something about NamedTuples")
       text.extract_tags
-      
+
       text.to_h.has_key?("facets").should eq(true)
 
       facet = text.to_h["facets"][0].as(Hash)
